@@ -16,7 +16,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.$store.dispatch('user/getadmin', params).then(res => {
+    this.$store.dispatch('user/getadmin', {}).then(res => {
       this.res = res
     }).catch(() => {
     }) 
