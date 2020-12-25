@@ -48,6 +48,19 @@ const actions = {
     })
   },
 
+  // 获取用户信息
+  getadmin({ commit }) {
+    return new Promise((resolve, reject) => {
+      return api.post(`/getadmin`, {}, { 'Content-Type': 'multipart/form-data' }).then(res => {
+        console.log(res)
+        resolve(res)
+      }, res => {
+        console.log(res)
+        reject(res)
+      })
+    })
+  },
+
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {

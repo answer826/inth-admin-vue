@@ -1,5 +1,6 @@
 const devUrl = 'https://test.inthlife.com' // 开发环境
-const prodUrl = 'https://api.inthlife.com' // 生产环境
+const prodUrl = 'https://test.inthlife.com' // 开发环境
+// const prodUrl = 'https://api.inthlife.com' // 生产环境
 const contextUrl = '/adminapi'
 
 export const getConfig = () => {
