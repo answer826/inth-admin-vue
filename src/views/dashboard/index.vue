@@ -1,11 +1,11 @@
 <template>
   <div class="dashboard-container">
-    {{res}}
+    {{ res }}
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
 export default {
   name: 'Dashboard',
@@ -18,9 +18,8 @@ export default {
   mounted() {
     this.$store.dispatch('user/getadmin', {}).then(res => {
       this.res = res
-    }).catch(() => {
-    }) 
-  },
+    })
+  }
 }
 </script>
 

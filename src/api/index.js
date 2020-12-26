@@ -1,4 +1,6 @@
 import axios from 'axios'
+// import { resetRouter } from '@/router'
+// import store from '@/store'
 import { getConfig } from './config'
 const methods = ['get', 'put', 'post']
 class Api {
@@ -31,6 +33,24 @@ class Api {
         })
       })
     })
+
+    // http响应拦截器
+    // axios.interceptors.response.use(
+    //   response => {
+    //     return response
+    //   },
+    //   error => {
+    //     if (error.response) {
+    //       switch (error.response.status) {
+    //         case 401:
+    //           sessionStorage.removeItem('UserInfo')
+    //           resetRouter()
+    //           store.commit('RESET_STATE')
+    //       }
+    //     }
+    //     return Promise.reject(error.response.data) // 返回接口返回的错误信息
+    //   }
+    // )
   }
 }
 export default new Api()

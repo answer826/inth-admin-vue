@@ -3,13 +3,34 @@
 @import './transition.scss';
 @import './element-ui.scss';
 @import './sidebar.scss';
+@import './fontawesome.min.css';
+
+@font-face {
+  font-family: 'oppo';     /* oppo字体 */
+  src:  url('../assets/fonts/OPPOSans-M.ttf');
+  font-weight: normal; 
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  src:  url('../assets/fonts/fa-solid-900.ttf');
+  font-weight: normal; 
+  font-style: normal; 
+}
+
+.fa,
+.fas {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
 
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: 'oppo', Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
 label {

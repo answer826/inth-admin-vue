@@ -1,5 +1,4 @@
 #app {
-
   .main-container {
     min-height: 100%;
     transition: margin-left .28s;
@@ -19,12 +18,11 @@
     left: 0;
     z-index: 1001;
     overflow: hidden;
-
+    user-select: none;
     // reset element-ui css
     .horizontal-collapse-transition {
       transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
     }
-
     .scrollbar-wrapper {
       overflow-x: hidden !important;
     }
@@ -54,14 +52,36 @@
     }
 
     .svg-icon {
-      margin-right: 16px;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
-    .sub-el-icon {
-      margin-right: 12px;
-      margin-left: -2px;
+    .fa {
+      position: absolute;
+      right: 20px;
+      top: 54.1%;
+      transform: translateY(-50%);
     }
 
+    .el-submenu__icon-arrow { 
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-top: auto;
+      margin-left: 10px;
+    }
+
+    .el-submenu__title {
+      span {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 40%;
+      }
+    }
     .el-menu {
       border: none;
       height: 100%;
@@ -71,8 +91,15 @@
     // menu hover
     .submenu-title-noDropdown,
     .el-submenu__title {
+      i {
+        transition: all .5s;
+      }
       &:hover {
         background-color: $menuHover !important;
+        color: #000 !important;
+        i {
+          color: #000 !important;
+        }
       }
     }
 
