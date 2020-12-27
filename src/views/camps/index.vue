@@ -25,14 +25,14 @@
           label="房间"
         >
           <template>
-            <el-button size="mini">管理</el-button>
+            <el-button size="mini" @click="toRoomList(1)">管理</el-button>
           </template>
         </el-table-column>
         <el-table-column
           label="操作"
         >
           <template>
-            <el-button size="mini">编辑</el-button>
+            <el-button size="mini" @click="toCamp(1)">编辑</el-button>
             <el-button type="danger" size="mini">删除</el-button>
           </template>
         </el-table-column>
@@ -54,7 +54,7 @@ export default {
       tableData: [{
         name: '华美达营地',
         date: '2020-12-27 00:02:29',
-        address: '上海市普陀区金沙江路 1518 弄'
+        address: '四川省阿坝藏族羌族自治州理县古尔沟镇温泉路33号'
       }],
       pageInfo: {
         currentPage: 1,
@@ -67,6 +67,10 @@ export default {
     // 跳转到营地
     toCamp(id) {
       this.$router.push(`/camps/edit/${id}`)
+    },
+    // 跳转到房间列表
+    toRoomList(id) {
+      this.$router.push(`/roomList/${id}`)
     }
   }
 }

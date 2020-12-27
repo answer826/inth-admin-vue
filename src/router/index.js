@@ -71,6 +71,27 @@ export const constantRoutes = [
         meta: { title: '营地编辑' },
         component: () => import('@/views/camps/camp'),
         hidden: true
+      },
+      {
+        path: '/roomList/:id',
+        meta: { title: '房间管理' },
+        name: 'RoomList',
+        hidden: true,
+        component: () => import('@/views/camps/room'),
+        children: [
+          {
+            path: '/',
+            component: () => import('@/views/camps/room/roomList'),
+            hidden: true
+          },
+          {
+            path: '/roomInfo/:id',
+            name: 'RoomInfo',
+            meta: { title: '房间编辑' },
+            component: () => import('@/views/camps/room/roomInfo'),
+            hidden: true
+          }
+        ]
       }
     ]
   },

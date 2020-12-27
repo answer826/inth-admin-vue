@@ -1,7 +1,7 @@
 <template>
   <div class="page-container step-page">
     <div class="head">
-      <div class="tit">{{ campId > 0 ? '华美达营地' : '新增营地' }}</div>
+      <div class="tit">华美达营地 - {{ campId > 0 ? '隐室' : '新增房间' }}</div>
     </div>
     <div class="step-tit">
       <div v-for="(step, index) in campEditStep" :key="index" :class="{active:currentStep===index}">{{ step.name }}</div>
@@ -12,25 +12,25 @@
   </div>
 </template>
 <script>
-import CampInfo from './components/campInfo'
-import CampImg from './components/campImg'
+import RoomInfo from './components/roomInfo'
 import SwiperImg from './components/swiperImg'
+import Amenities from './components/amenities'
 export default {
   components: {
-    CampInfo,
-    CampImg,
-    SwiperImg
+    RoomInfo,
+    SwiperImg,
+    Amenities
   },
   data() {
     return {
       campEditStep: [
         {
           name: '基础信息',
-          component: 'CampInfo'
+          component: 'RoomInfo'
         },
         {
-          name: '封面图片',
-          component: 'CampImg'
+          name: '房间特色',
+          component: 'Amenities'
         },
         {
           name: '轮播图片',
