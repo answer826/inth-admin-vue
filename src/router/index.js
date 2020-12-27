@@ -57,19 +57,19 @@ export const constantRoutes = [
   {
     path: '/camps',
     component: Layout,
-    redirect: '/camps',
+    meta: { title: '营地管理', icon: 'fa fa-campground' },
     children: [
       {
-        path: 'index',
-        name: 'Camps',
-        meta: { title: '营地管理', icon: 'fa fa-campground' },
-        component: () => import('@/views/camps/index')
+        path: '/',
+        name: 'CampsList',
+        component: () => import('@/views/camps'),
+        hidden: true
       },
       {
-        path: 'camps',
-        name: 'Camps',
-        meta: { title: '营地管理', icon: 'dashboard' },
-        component: () => import('@/views/camps/index'),
+        path: 'edit/:id',
+        name: 'CampsEdit',
+        meta: { title: '营地编辑' },
+        component: () => import('@/views/camps/camp'),
         hidden: true
       }
     ]
