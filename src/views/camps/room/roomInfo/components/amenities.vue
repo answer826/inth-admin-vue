@@ -9,7 +9,7 @@
     <div class="container">
       <el-form ref="form" class="form" :model="info" label-width="80px">
         <div class="transfer">
-          <el-transfer v-model="value" :data="data" :titles="['未选择', '已选择']"></el-transfer>
+          <el-transfer v-model="value" :data="data" :titles="['未选择', '已选择']" />
         </div>
         <el-form-item size="large">
           <el-button @click="changeStep(0)">上一步</el-button>

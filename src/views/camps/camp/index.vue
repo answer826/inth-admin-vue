@@ -15,11 +15,13 @@
 import CampInfo from './components/campInfo'
 import CampImg from './components/campImg'
 import SwiperImg from './components/swiperImg'
+import SetAddr from './components/setAddr'
 export default {
   components: {
     CampInfo,
     CampImg,
-    SwiperImg
+    SwiperImg,
+    SetAddr
   },
   data() {
     return {
@@ -27,6 +29,10 @@ export default {
         {
           name: '基础信息',
           component: 'CampInfo'
+        },
+        {
+          name: '位置信息',
+          component: 'SetAddr'
         },
         {
           name: '封面图片',

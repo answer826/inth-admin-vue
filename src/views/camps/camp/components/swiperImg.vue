@@ -2,7 +2,7 @@
   <div class="step-con">
     <div class="tit-con">
       <div class="tit">
-        <h2 class="name">第三步 轮播图片</h2>
+        <h2 class="name">第四步 轮播图片</h2>
         <p class="tip">请上传营地轮播图片</p>
       </div>
     </div>
@@ -22,12 +22,12 @@
                 </div>
               </ImgCutter>
             </div>
-            <div v-for="(item,index) in imageList" :key="index" class="con img" :style="`background-image:url('${item.dataURL}')`"></div>
+            <div v-for="(item,index) in imageList" :key="index" class="con img" :style="`background-image:url('${item.dataURL}')`" />
           </div>
         </div>
         <el-form-item size="large">
-          <el-button @click="changeStep(1)">上一步</el-button>
-          <el-button type="primary" @click="changeStep(2)">完成</el-button>
+          <el-button @click="changeStep(2)">上一步</el-button>
+          <el-button type="primary" @click="changeStep(3)">完成</el-button>
         </el-form-item>
       </el-form>
     </div>
