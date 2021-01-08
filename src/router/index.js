@@ -90,6 +90,13 @@ export const constantRoutes = [
             meta: { title: '房间编辑' },
             component: () => import('@/views/camps/room/roomInfo'),
             hidden: true
+          },
+          {
+            path: '/orderMgr/:id',
+            name: 'RoomOrder',
+            meta: { title: '房间编辑' },
+            component: () => import('@/views/camps/room/order'),
+            hidden: true
           }
         ]
       }

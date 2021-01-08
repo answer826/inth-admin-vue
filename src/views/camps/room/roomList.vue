@@ -19,6 +19,13 @@
           label="创建时间"
         />
         <el-table-column
+          label="订单"
+        >
+          <template>
+            <el-button size="mini" @click="toOrder(1)">订单管理</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
           label="操作"
         >
           <template>
@@ -56,6 +63,9 @@ export default {
     // 跳转到营地
     toRoom(id) {
       this.$router.push(`/roomInfo/${id}`)
+    },
+    toOrder(id) {
+      this.$router.push(`/orderMgr/${id}`)
     }
   }
 }

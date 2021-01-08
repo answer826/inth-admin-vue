@@ -15,11 +15,13 @@
 import RoomInfo from './components/roomInfo'
 import SwiperImg from './components/swiperImg'
 import Amenities from './components/amenities'
+import PriceSet from './components/priceSet'
 export default {
   components: {
     RoomInfo,
     SwiperImg,
-    Amenities
+    Amenities,
+    PriceSet
   },
   data() {
     return {
@@ -35,6 +37,10 @@ export default {
         {
           name: '轮播图片',
           component: 'SwiperImg'
+        },
+        {
+          name: '价格设置',
+          component: 'PriceSet'
         }
       ],
       currentStep: 0,

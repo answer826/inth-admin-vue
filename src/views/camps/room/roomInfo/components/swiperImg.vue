@@ -22,12 +22,12 @@
                 </div>
               </ImgCutter>
             </div>
-            <div v-for="(item,index) in imageList" :key="index" class="con img" :style="`background-image:url('${item.dataURL}')`"></div>
+            <div v-for="(item,index) in imageList" :key="index" class="con img" :style="`background-image:url('${item.dataURL}')`" />
           </div>
         </div>
         <el-form-item size="large">
           <el-button @click="changeStep(1)">上一步</el-button>
-          <el-button type="primary" @click="changeStep(2)">完成</el-button>
+          <el-button type="primary" @click="changeStep(3)">下一步</el-button>
         </el-form-item>
       </el-form>
     </div>
