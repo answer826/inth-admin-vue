@@ -16,6 +16,7 @@ router.beforeEach(async(to, from, next) => {
   document.title = getPageTitle(to.meta.title)
 
   // determine whether the user has logged in
+  console.log(store.state)
   const userInfo = store.state.user.userInfo
   if (userInfo) {
     if (to.path === '/login') {
