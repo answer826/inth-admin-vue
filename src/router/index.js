@@ -54,7 +54,7 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'fa fa-home' }
     }]
   },
-  {
+  { // 营地
     path: '/camps',
     component: Layout,
     meta: { title: '营地管理', icon: 'fa fa-campground' },
@@ -99,6 +99,26 @@ export const constantRoutes = [
             hidden: true
           }
         ]
+      }
+    ]
+  },
+  { // 营地
+    path: '/coupon',
+    component: Layout,
+    meta: { title: '优惠券', icon: 'fa fa-swatchbook' },
+    children: [
+      {
+        path: '/',
+        name: 'CouponList',
+        component: () => import('@/views/coupon/couponList'),
+        hidden: true
+      },
+      {
+        path: 'edit/:id',
+        name: 'CouponEdit',
+        meta: { title: '优惠券编辑' },
+        component: () => import('@/views/coupon/couponEdit'),
+        hidden: true
       }
     ]
   },
