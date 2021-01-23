@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="container">
-      <el-form ref="form" class="form" :model="info" label-width="80px">
+      <el-form ref="form" class="form" label-width="80px">
         <div class="img-cut-con img-upload-list">
           <div class="tit">轮播图片</div>
           <div class="cons">
@@ -27,7 +27,7 @@
         </div>
         <el-form-item size="large">
           <el-button @click="changeStep(2)">上一步</el-button>
-          <el-button type="primary" @click="changeStep(3)">完成</el-button>
+          <el-button type="primary" :disabled="!imageList.length" @click="doSave">完成</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -53,6 +53,9 @@ export default {
       this.imageList.push(obj)
       console.log(obj)
       this.previewImg = obj.dataURL
+    },
+    doSave() { // 保存营地
+
     }
   }
 }

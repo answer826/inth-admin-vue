@@ -31,6 +31,7 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
+    disableHostCheck: true,
     port: port,
     open: true,
     overlay: {
@@ -40,9 +41,28 @@ module.exports = {
     // before: require('./mock/mock-server.js'),
     proxy: {
       '/api': {
-        target: 'https://test.inthlife.com:443',
+        target: 'https://admin.inthlife.com',
         changeOrigin: true,
         secure: false,
+        onProxyRes: function(proxyRes, req, res) {
+          const cookies = proxyRes.headers['set-cookie']
+          const cookiePathRegex = /(p|P)ath=\/\w*;/
+          let newCookie
+          // 修改cookie Path
+          if (cookies) {
+            newCookie = cookies.map(cookie => {
+              if (cookieRegex.test(cookie)) {
+                // 替换
+                return cookie.replace(cookiePathRegex, 'path=/;')
+              }
+              return cookie
+            })
+            // 替换set-cookie
+            delete proxyRes.headers['set-cookie']
+            proxyRes.headers['set-cookie'] = newCookie
+            // console.log(proxyRes.headers['set-cookie'])
+          }
+        },
         pathRewrite: {
             '^/api': ''
         }

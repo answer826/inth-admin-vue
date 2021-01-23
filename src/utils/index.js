@@ -115,3 +115,12 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+// 对象转formData
+export function obj2FormData(obj) {
+  const form = new FormData()
+  for (const key in obj) {
+    form.append(key, obj[key])
+  }
+  return form
+}

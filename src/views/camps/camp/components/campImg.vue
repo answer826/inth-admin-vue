@@ -28,7 +28,7 @@
         </div>
         <el-form-item size="large">
           <el-button @click="changeStep(1)">上一步</el-button>
-          <el-button type="primary" @click="changeStep(3)">下一步</el-button>
+          <el-button type="primary" :disabled="!previewImg" @click="changeStep(3)">下一步</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -39,6 +39,14 @@ import ImgCutter from '@/components/ImageCutter'
 export default {
   components: {
     ImgCutter
+  },
+  props: {
+    data: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
   },
   data() {
     return {
@@ -51,7 +59,7 @@ export default {
       this.$emit('dispatch', 'changeStep', step)
     },
     cutDown(obj) {
-      console.log(obj)
+      this.data.thumbnail = obj
       this.previewImg = obj.dataURL
     }
   }

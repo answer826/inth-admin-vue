@@ -7,7 +7,7 @@
       <div v-for="(step, index) in campEditStep" :key="index" :class="{active:currentStep===index}">{{ step.name }}</div>
     </div>
     <transition name="fade-transform" mode="out-in">
-      <component :is="campEditStep[currentStep].component" @dispatch="dispatch" />
+      <component :is="campEditStep[currentStep].component" :data="data" @dispatch="dispatch" />
     </transition>
   </div>
 </template>
@@ -16,6 +16,7 @@ import CampInfo from './components/campInfo'
 import CampImg from './components/campImg'
 import SwiperImg from './components/swiperImg'
 import SetAddr from './components/setAddr'
+import data from './data'
 export default {
   components: {
     CampInfo,
@@ -44,7 +45,8 @@ export default {
         }
       ],
       currentStep: 0,
-      campId: this.$route.params.id
+      campId: this.$route.params.id,
+      data: data.getData()
     }
   },
   methods: {
