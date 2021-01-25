@@ -12,7 +12,8 @@ export default {
         longitude: null,
         thumbUrl: null
       },
-      campImgs: []
+      campImgs: [],
+      campVod: null
     }
   }
 }

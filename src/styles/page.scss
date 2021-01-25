@@ -95,17 +95,20 @@
             border-radius: 5px;
             transition: all .5s;
             overflow: hidden;
-            cursor: pointer;
+            .uploadInput{
+              display: none;
+            }
             .open{
-                width: 120px;
-                height: 120px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                i{
-                    font-size: 40px;
-                    opacity: .2;
-                }
+              cursor: pointer;
+              width: 120px;
+              height: 120px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              i{
+                  font-size: 40px;
+                  opacity: .2;
+              }
             }
             &:hover{
                 border-color: #409EFF;
