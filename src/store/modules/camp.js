@@ -94,7 +94,7 @@ const actions = {
   // 获取营地信息
   getCamp({ commit }, id) {
     return new Promise((resolve, reject) => {
-      return api.get(`/camps/${id}`, {}, {}).then(res => {
+      return api.get(`/camp/${id}`, {}, {}).then(res => {
         resolve(res)
       }, res => {
         reject(res)
