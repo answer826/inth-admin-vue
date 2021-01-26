@@ -10,7 +10,7 @@ const actions = {
   // 获取营地列表
   getCamps({ commit }, params) {
     return new Promise((resolve, reject) => {
-      return api.post(`/camps`, params, {}, '/api/v1').then(res => {
+      return api.get(`/camps`, params, {}).then(res => {
         resolve(res)
       }, res => {
         reject(res)
@@ -94,7 +94,7 @@ const actions = {
   // 获取营地信息
   getCamp({ commit }, id) {
     return new Promise((resolve, reject) => {
-      return api.get(`/camps/${id}`, {}, {}, '/api/v1').then(res => {
+      return api.get(`/camps/${id}`, {}, {}).then(res => {
         resolve(res)
       }, res => {
         reject(res)
