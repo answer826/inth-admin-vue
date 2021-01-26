@@ -6,9 +6,9 @@ const methods = ['get', 'put', 'post', 'delete', 'patch']
 class Api { // 通用api请求方法
   constructor() {
     methods.forEach(method => {
-      this[method] = (path, data = {}, headers = {}, contextUrl = null) => new Promise((resolve, reject) => {
-        const { API_URL, BASE_URL } = getConfig(path)
-        const url = (!contextUrl ? API_URL : BASE_URL + contextUrl) + path
+      this[method] = (path, data = {}, headers = {}) => new Promise((resolve, reject) => {
+        const { API_URL } = getConfig(path)
+        const url = API_URL + path
         const options = {
           method: method,
           url: url,

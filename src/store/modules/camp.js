@@ -102,9 +102,9 @@ const actions = {
     })
   },
   // 更新营地
-  updateCamp({ commit }, id, params) {
+  updateCamp({ commit }, params) {
     return new Promise((resolve, reject) => {
-      return api.patch(`/camp/${id}`, params, { 'Content-Type': 'application/x-www-form-urlencoded' }).then(res => {
+      return api.patch(`/camp/${params.campId}`, params.params, {}, {}).then(res => {
         resolve(res)
       }, res => {
         reject(res)

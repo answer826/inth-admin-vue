@@ -4,7 +4,7 @@
       <div class="tit">{{ campId > 0 ? '华美达营地' : '新增营地' }}</div>
     </div>
     <div class="step-tit">
-      <div v-for="(step, index) in campEditStep" :key="index" :class="{active:currentStep===index}">{{ step.name }}</div>
+      <div v-for="(step, index) in campEditStep" :key="index" :class="{active:currentStep===index}" @click="campId ? changeStep(index) : false">{{ step.name }}</div>
     </div>
     <transition name="fade-transform" mode="out-in">
       <component :is="campEditStep[currentStep].component" :data="data" @dispatch="dispatch" />
@@ -99,11 +99,11 @@ export default {
           const uploadThumbnailRes = await this.$store.dispatch('camp/uploadThumbnail', uploadThumbnailParams)
           this.campInfo.thumbUrl = uploadThumbnailRes.data.path
         }
-        const campInfoParams = new URLSearchParams()
+        const campInfoParams = {}
         for (const key in this.data.campInfo) { // 遍历营地信息添加到form表单里
-          if (key !== 'id') campInfoParams.append(key, this.data.campInfo[key])
+          if (key !== 'id') campInfoParams[key] = this.data.campInfo[key]
         }
-        await this.$store.dispatch('camp/updateCamp', this.campId, campInfoParams)
+        await this.$store.dispatch('camp/updateCamp', { campId: this.campId, params: JSON.stringify(campInfoParams) })
         if (this.data.deleteImgs.length) { // 如果有需要删除的图片
           const deleteImgs = []
           for (const i in this.data.deleteImgs) {
