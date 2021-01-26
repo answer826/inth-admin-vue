@@ -11,14 +11,14 @@
         <div class="img-cut-con img-upload-list">
           <div class="tit">轮播视频（可选）</div>
           <div class="cons">
-            <div v-if="!videoUrl" class="con">
+            <div v-if="!videoUrl && !data.campVod" class="con">
               <input id="uploadVod" type="file" class="uploadInput" :value="selectVod" accept="video/*" @change="chooseVideoInput">
               <label class="open" for="uploadVod">
                 <i class="el-icon-plus" />
               </label>
             </div>
             <div v-else class="videoCon">
-              <video id="video" :src="videoUrl" x5-playsinline="" playsinline="" webkit-playsinline preload="auto" controls="controls" />
+              <video id="video" :src="data.campVod.id ? data.campVod.viewUrl : videoUrl" x5-playsinline="" playsinline="" webkit-playsinline preload="auto" controls="controls" />
               <div>
                 <input id="uploadVod" type="file" class="uploadInput" :value="selectVod" accept="video/*" @change="chooseVideoInput">
                 <label for="uploadVod">
@@ -43,7 +43,7 @@
                 </div>
               </ImgCutter>
             </div>
-            <div v-for="(item,index) in data.campImgs" :key="index" class="con img" :style="`background-image:url('${item.dataURL}')`">
+            <div v-for="(item,index) in data.campImgs" :key="index" class="con img" :style="`background-image:url('${item.id?item.viewUrl:item.dataURL}')`">
               <div class="options">
                 <!-- <i class="fas fa-search-plus" /> // 暂时先不加预览 -->
                 <i class="fas fa-trash-alt" @click="deleteImg(index)" />
@@ -53,7 +53,7 @@
         </div>
         <el-form-item size="large">
           <el-button @click="changeStep(2)">上一步</el-button>
-          <el-button type="primary" :disabled="!data.campImgs.length" @click="doSave">完成</el-button>
+          <el-button type="primary" :disabled="!data.campImgs.length" @click="doSave">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -88,19 +88,24 @@ export default {
       this.previewImg = obj.dataURL
     },
     deleteImg(index) { // 删除图片
+      if (this.data.campImgs[index].id) {
+        this.data.deleteImgs.push(this.data.campImgs[index].id)
+      }
       this.data.campImgs.splice(index, 1)
     },
     chooseVideoInput(event) { // 选择视频转换成url预览
+      if (this.data.campVod && this.data.campVod.id) this.data.deleteVods = this.data.campVod.id
       this.data.campVod = document.getElementById('uploadVod').files[0]
       const url = URL.createObjectURL(this.data.campVod)
       this.videoUrl = url
       this.selectVod = null
     },
     deleteVod() { // 删除视频
-      this.$confirm('确定要删除次视频吗?', '提示', {
+      this.$confirm('确定要删除此视频吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
+        if (this.data.campVod.id) this.data.deleteVods = this.data.campVod.id
         this.videoUrl = null
         this.data.campVod = null
       }).catch(() => {})
@@ -116,6 +121,7 @@ export default {
   .videoCon{
     video{
       margin-bottom: 10px;
+      width: 500px;
     }
     input{
       display: none;

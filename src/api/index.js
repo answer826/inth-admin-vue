@@ -2,13 +2,13 @@ import axios from 'axios'
 // import { resetRouter } from '@/router'
 // import store from '@/store'
 import { getConfig } from './config'
-const methods = ['get', 'put', 'post']
+const methods = ['get', 'put', 'post', 'delete', 'patch']
 class Api { // 通用api请求方法
   constructor() {
     methods.forEach(method => {
-      this[method] = (path, data = {}, headers = {}) => new Promise((resolve, reject) => {
-        const { API_URL } = getConfig(path)
-        const url = API_URL + path
+      this[method] = (path, data = {}, headers = {}, contextUrl = null) => new Promise((resolve, reject) => {
+        const { API_URL, BASE_URL } = getConfig(path)
+        const url = (!contextUrl ? API_URL : BASE_URL + contextUrl) + path
         const options = {
           method: method,
           url: url,
@@ -28,6 +28,9 @@ class Api { // 通用api请求方法
             } else {
               reject(res.data)
             }
+          }
+          if (res.status === 204) {
+            resolve(res.data) // delete成功
           }
         }).catch((error) => {
           reject(error)

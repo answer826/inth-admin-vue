@@ -23,6 +23,7 @@
             <img v-if="previewImg" class="preview-img" :src="previewImg">
             <div>
               <el-button @click="previewImg = null">重新选择</el-button>
+              <el-button v-if="data.thumbnail && data.campInfo.id" type="primary" @click="resetImg">还原</el-button>
             </div>
           </div>
         </div>
@@ -54,6 +55,13 @@ export default {
       previewImg: null
     }
   },
+  mounted() {
+    if (!this.data.thumbnail && this.data.campInfo.id) { // 初始化显示图片
+      this.previewImg = this.downUrl + this.data.campInfo.thumbUrl
+    } else if (this.data.thumbnail) {
+      this.previewImg = this.data.thumbnail.dataURL
+    }
+  },
   methods: {
     changeStep(step) {
       this.$emit('dispatch', 'changeStep', step)
@@ -61,7 +69,19 @@ export default {
     cutDown(obj) {
       this.data.thumbnail = obj
       this.previewImg = obj.dataURL
+    },
+    resetImg() {
+      this.previewImg = this.downUrl + this.data.campInfo.thumbUrl
+      this.data.thumbnail = null
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.preview-con{
+  .preview-img{
+    width: 300px;
+  }
+}
+</style>
+

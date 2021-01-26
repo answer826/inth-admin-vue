@@ -16,6 +16,8 @@ import axios from 'axios'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import { getConfig } from '@/api/config'
+const { BASE_URL } = getConfig()
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -31,6 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // 全局axios
 Vue.prototype.$axios = axios
+Vue.prototype.downUrl = BASE_URL // 全局图片地址
 
 // set ElementUI lang to EN
 Vue.use(ElementUI)

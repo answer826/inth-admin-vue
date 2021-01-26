@@ -2,7 +2,7 @@ export default {
   getData() {
     return {
       thumbnail: null, // 需要上传的封面对象
-      campInfo: {
+      campInfo: { // 营地信息
         name: null,
         address: null,
         description: null,
@@ -13,7 +13,9 @@ export default {
         thumbUrl: null
       },
       campImgs: [],
-      campVod: null
+      campVod: null,
+      deleteImgs: [],
+      deleteVods: null
     }
   }
 }

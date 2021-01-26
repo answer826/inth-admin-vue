@@ -12,10 +12,12 @@
         <el-table-column
           prop="name"
           label="名称"
+          width="200px"
         />
         <el-table-column
-          prop="date"
-          label="创建时间"
+          prop="state"
+          label="地区"
+          width="200px"
         />
         <el-table-column
           prop="address"
@@ -23,6 +25,7 @@
         />
         <el-table-column
           label="房间"
+          width="150px"
         >
           <template>
             <el-button size="mini" @click="toRoomList(1)">管理</el-button>
@@ -30,20 +33,21 @@
         </el-table-column>
         <el-table-column
           label="操作"
+          width="200px"
         >
-          <template>
-            <el-button size="mini" @click="toCamp(1)">编辑</el-button>
-            <el-button type="danger" size="mini">删除</el-button>
+          <template slot-scope="scope">
+            <el-button size="mini" @click="toCamp(scope.row.id)">编辑</el-button>
+            <el-button type="danger" size="mini" @click="deleteCamp(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <div class="block">
+    <!-- <div class="block">
       <el-pagination
         layout="prev, pager, next"
         :total="50"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -51,18 +55,23 @@
 export default {
   data() {
     return {
-      tableData: [{
-        name: '华美达营地',
-        date: '2020-12-27 00:02:29',
-        address: '四川省阿坝藏族羌族自治州理县古尔沟镇温泉路33号'
-      }],
+      tableData: [],
       pageInfo: {
         currentPage: 1,
         total: 0
       }
     }
   },
+  mounted() {
+    this.getCamps()
+  },
   methods: {
+    // 获取营地
+    getCamps() {
+      this.$store.dispatch('camp/getCamps').then(res => {
+        this.tableData = res.data
+      })
+    },
     handleCurrentChange() {},
     // 跳转到营地
     toCamp(id) {
@@ -71,6 +80,21 @@ export default {
     // 跳转到房间列表
     toRoomList(id) {
       this.$router.push(`/roomList/${id}`)
+    },
+    // 删除营地
+    deleteCamp(camp) {
+      this.$confirm(`确定要删除${camp.name}吗?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$store.dispatch('camp/deleteCamp', camp.id).then(res => {
+          this.$message({
+            message: '删除成功！',
+            type: 'success'
+          })
+          this.getCamps()
+        })
+      }).catch(() => {})
     }
   }
 }
