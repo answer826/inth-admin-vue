@@ -15,10 +15,6 @@
           label="名称"
         />
         <el-table-column
-          prop="date"
-          label="创建时间"
-        />
-        <el-table-column
           label="订单"
         >
           <template>
@@ -28,19 +24,19 @@
         <el-table-column
           label="操作"
         >
-          <template>
-            <el-button size="mini" @click="toRoom(1)">编辑</el-button>
-            <el-button type="danger" size="mini">删除</el-button>
+          <template slot-scope="scope">
+            <el-button size="mini" @click="toRoom(scope.row.id)">编辑</el-button>
+            <el-button type="danger" size="mini" @click="deleteRoom(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <div class="block">
+    <!-- <div class="block">
       <el-pagination
         layout="prev, pager, next"
         :total="50"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -48,24 +44,50 @@
 export default {
   data() {
     return {
-      tableData: [{
-        name: '隐室',
-        date: '2020-12-27 00:02:29'
-      }],
+      tableData: [],
       pageInfo: {
         currentPage: 1,
         total: 0
-      }
+      },
+      campId: this.$route.params.campId
     }
+  },
+  computed: {
+    key() {
+      return this.$route.fullPath
+    }
+  },
+  mounted() {
+    this.getRooms()
   },
   methods: {
     handleCurrentChange() {},
-    // 跳转到营地
+    getRooms() {
+      this.$store.dispatch('room/getRoomList', this.campId).then(res => {
+        this.tableData = res.data
+      })
+    },
+    // 跳转到房间
     toRoom(id) {
-      this.$router.push(`/roomInfo/${id}`)
+      this.$router.push(`/roomInfo/${this.campId}/${id}`)
     },
     toOrder(id) {
       this.$router.push(`/orderMgr/${id}`)
+    },
+    // 删除房间
+    deleteRoom(room) {
+      this.$confirm(`确定要删除${room.name}吗?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$store.dispatch('room/deleteRoom', room.id).then(res => {
+          this.$message({
+            message: '删除成功！',
+            type: 'success'
+          })
+          this.getRooms()
+        })
+      }).catch(() => {})
     }
   }
 }

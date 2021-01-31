@@ -7,23 +7,23 @@
       </div>
     </div>
     <div class="container">
-      <el-form ref="form" class="form" :model="info" label-width="80px">
-        <el-form-item label="基础价格">
-          <el-input v-model="info.name" placeholder="请输入房间基础价格" />
+      <el-form ref="form" class="form" :model="roomData.roomInfo" :rules="rules" label-width="80px">
+        <el-form-item label="基础价格" prop="base_price">
+          <el-input v-model="roomData.roomInfo.base_price" type="number" placeholder="请输入房间基础价格" />
         </el-form-item>
         <el-form-item label="价格总览">
           <el-calendar class="room-price-set">
             <template slot="dateCell" slot-scope="{ date, data }">
               <div :class="['date-cell', {disabled: new Date(data.day) < todayDate}]" @click.stop.prevent="selectDate(new Date(data.day), data.day)">
                 <div class="date-con">{{ data.day.split('-').slice(2).join('-') }}</div>
-                <div class="price-con">￥1260</div>
+                <div v-if="roomData.roomInfo.base_price" class="price-con" :title="`￥${roomData.roomInfo.base_price}`">￥{{ roomData.roomInfo.base_price }}</div>
               </div>
             </template>
           </el-calendar>
         </el-form-item>
         <el-form-item size="large">
-          <el-button type="primary" @click="changeStep(2)">上一步</el-button>
-          <el-button type="primary">完成</el-button>
+          <el-button @click="changeStep(2)">上一步</el-button>
+          <el-button type="primary" @click="doSave">完成</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -31,10 +31,22 @@
 </template>
 <script>
 export default {
+  props: {
+    roomData: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data() {
     return {
-      info: {},
-      todayDate: new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} 00:00:00`)
+      todayDate: new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} 00:00:00`),
+      rules: {
+        base_price: [
+          { required: true, message: '请输入基础价格', trigger: 'change' }
+        ]
+      }
     }
   },
   methods: {
@@ -60,6 +72,13 @@ export default {
           message: '取消输入'
         })
       })
+    },
+    doSave() {
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          this.$emit('dispatch', 'doSave')
+        }
+      })
     }
   }
 }
@@ -81,9 +100,13 @@ export default {
             background: none;
         }
         .next{
-            .price-con{
-                color: #999 !important;
-            }
+          .price-con{
+            color: #999 !important;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+          }
         }
         .el-calendar-day{
             height: auto;
@@ -107,7 +130,12 @@ export default {
                     background: rgba($color: #409EFF, $alpha: 0.1);
                 }
                 .price-con{
-                    color: #409EFF;
+                  color: #409EFF;
+                  color: #999 !important;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  word-break: break-all;
                 }
             }
         }

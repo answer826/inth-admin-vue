@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="container">
-      <el-form ref="form" class="form" :model="info" label-width="80px">
+      <el-form ref="form" class="form" label-width="80px">
         <div class="transfer">
           <el-transfer v-model="value" :data="data" :titles="['未选择', '已选择']" />
         </div>

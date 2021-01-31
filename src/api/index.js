@@ -1,6 +1,7 @@
 import axios from 'axios'
 // import { resetRouter } from '@/router'
 // import store from '@/store'
+import { Loading } from 'element-ui'
 import { getConfig } from './config'
 const methods = ['get', 'put', 'post', 'delete', 'patch']
 class Api { // 通用api请求方法
@@ -26,6 +27,10 @@ class Api { // 通用api请求方法
             if (code === 0) {
               resolve(res.data)
             } else {
+              const lading = Loading.service({
+                lock: true
+              })
+              lading.close()
               reject(res.data)
             }
           }
@@ -33,6 +38,10 @@ class Api { // 通用api请求方法
             resolve(res.data) // delete成功
           }
         }).catch((error) => {
+          const lading = Loading.service({
+            lock: true
+          })
+          lading.close()
           reject(error)
         })
       })

@@ -73,7 +73,7 @@ export const constantRoutes = [
         hidden: true
       },
       {
-        path: '/roomList/:id',
+        path: '/roomList/:campId',
         meta: { title: '房间管理' },
         name: 'RoomList',
         hidden: true,
@@ -85,7 +85,7 @@ export const constantRoutes = [
             hidden: true
           },
           {
-            path: '/roomInfo/:id',
+            path: '/roomInfo/:campId/:roomId',
             name: 'RoomInfo',
             meta: { title: '房间编辑' },
             component: () => import('@/views/camps/room/roomInfo'),
@@ -94,7 +94,7 @@ export const constantRoutes = [
           {
             path: '/orderMgr/:id',
             name: 'RoomOrder',
-            meta: { title: '房间编辑' },
+            meta: { title: '房间管理' },
             component: () => import('@/views/camps/room/order'),
             hidden: true
           }

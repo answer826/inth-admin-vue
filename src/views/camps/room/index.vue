@@ -1,3 +1,12 @@
 <template>
-    <router-view :key="key" />
+  <router-view :key="key" />
 </template>
+<script>
+export default {
+  computed: {
+    key() {
+      return this.$route.fullPath
+    }
+  }
+}
+</script>

@@ -27,8 +27,8 @@
           label="房间"
           width="150px"
         >
-          <template>
-            <el-button size="mini" @click="toRoomList(1)">管理</el-button>
+          <template slot-scope="scope">
+            <el-button size="mini" @click="toRoomList(scope.row.id)">管理</el-button>
           </template>
         </el-table-column>
         <el-table-column

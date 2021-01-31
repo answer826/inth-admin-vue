@@ -4,7 +4,7 @@
       <div class="tit">{{ campId > 0 ? '华美达营地' : '新增营地' }}</div>
     </div>
     <div class="step-tit">
-      <div v-for="(step, index) in campEditStep" :key="index" :class="{active:currentStep===index}" @click="campId ? changeStep(index) : false">{{ step.name }}</div>
+      <div v-for="(step, index) in campEditStep" :key="index" :class="{active:currentStep===index}" @click="campId > 0 ? changeStep(index) : false">{{ step.name }}</div>
     </div>
     <transition name="fade-transform" mode="out-in">
       <component :is="campEditStep[currentStep].component" :data="data" @dispatch="dispatch" />
@@ -51,7 +51,7 @@ export default {
     }
   },
   mounted() {
-    if (this.campId) {
+    if (this.campId > 0) {
       this.$store.dispatch('camp/getCamp', this.campId).then(res => {
         this.data.campInfo = res.data
         this.data.campImgs = res.data.campsimgs.map(item => {

@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     changeStep(step) {
-      console.log()
       this.$emit('dispatch', 'changeStep', step)
     },
     querySearch(queryStr, cb) {
@@ -90,7 +89,6 @@ export default {
       searchService.search(queryStr)
     },
     handleSelect(item) {
-      console.log(item)
       // 设置选择的地理位置
       this.data.campInfo.latitude = item.latLng.lat
       this.data.campInfo.longitude = item.latLng.lng

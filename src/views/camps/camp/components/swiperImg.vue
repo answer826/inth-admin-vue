@@ -3,13 +3,13 @@
     <div class="tit-con">
       <div class="tit">
         <h2 class="name">第四步 轮播视频与图片</h2>
-        <p class="tip">请上传营地轮播轮播视频与图片</p>
+        <p class="tip">请上传营地视频与轮播图片</p>
       </div>
     </div>
     <div class="container">
       <el-form ref="form" class="form" label-width="80px">
         <div class="img-cut-con img-upload-list">
-          <div class="tit">轮播视频（可选）</div>
+          <div class="tit">营地视频（可选）</div>
           <div class="cons">
             <div v-if="!videoUrl && !data.campVod" class="con">
               <input id="uploadVod" type="file" class="uploadInput" :value="selectVod" accept="video/*" @change="chooseVideoInput">
