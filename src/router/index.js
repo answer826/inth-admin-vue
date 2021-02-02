@@ -99,6 +99,27 @@ export const constantRoutes = [
             hidden: true
           }
         ]
+      },
+      {
+        path: '/stockList/:campId',
+        meta: { title: '库存管理' },
+        name: 'RoomList',
+        hidden: true,
+        component: () => import('@/views/camps/stock'),
+        children: [
+          {
+            path: '/',
+            component: () => import('@/views/camps/stock/stockList'),
+            hidden: true
+          },
+          {
+            path: '/stockDetail/:campId/:id',
+            name: 'stockDetail',
+            meta: { title: '物品编辑' },
+            component: () => import('@/views/camps/stock/stockDetail'),
+            hidden: true
+          }
+        ]
       }
     ]
   },

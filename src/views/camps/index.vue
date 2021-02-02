@@ -24,6 +24,14 @@
           label="地址"
         />
         <el-table-column
+          label="库存"
+          width="150px"
+        >
+          <template slot-scope="scope">
+            <el-button size="mini" @click="toStockList(scope.row.id)">管理</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
           label="房间"
           width="150px"
         >
@@ -80,6 +88,9 @@ export default {
     // 跳转到房间列表
     toRoomList(id) {
       this.$router.push(`/roomList/${id}`)
+    },
+    toStockList(id) {
+      this.$router.push(`/stockList/${id}`)
     },
     // 删除营地
     deleteCamp(camp) {
