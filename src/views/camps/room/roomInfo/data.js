@@ -6,7 +6,7 @@ export default {
         beds: null,
         base_price: null,
         room_size: null,
-        amenities: 1
+        amenities: []
       },
       roomImgs: [],
       deleteImgs: []

@@ -124,3 +124,13 @@ export function obj2FormData(obj) {
   }
   return form
 }
+
+// 对象转参数字符串
+export function obj2ParamsStr(params) {
+  let paramsStr = ''
+  for (const key in params) {
+    if (params[key] === '') continue
+    paramsStr += (paramsStr === '' ? '?' : '&') + key + `=${params[key]}`
+  }
+  return paramsStr
+}

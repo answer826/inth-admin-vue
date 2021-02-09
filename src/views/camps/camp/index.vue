@@ -97,7 +97,7 @@ export default {
           const uploadThumbnailParams = new FormData()
           uploadThumbnailParams.append('thumbnail', this.data.thumbnail.file)
           const uploadThumbnailRes = await this.$store.dispatch('camp/uploadThumbnail', uploadThumbnailParams)
-          this.campInfo.thumbUrl = uploadThumbnailRes.data.path
+          this.data.campInfo.thumbUrl = uploadThumbnailRes.data.path
         }
         const campInfoParams = {}
         for (const key in this.data.campInfo) { // 遍历营地信息添加到form表单里

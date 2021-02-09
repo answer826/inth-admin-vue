@@ -1,5 +1,5 @@
 import api from '@/api'
-import { obj2FormData } from '@/utils'
+import { obj2FormData, obj2ParamsStr } from '@/utils'
 // 房间相关api
 
 const state = {}
@@ -71,12 +71,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       const roomId = params.roomId
       delete params.roomId
-      let paramsStr = ''
-      for (const key in params) {
-        if (params[key] === '') continue
-        paramsStr += (paramsStr === '' ? '?' : '&') + key + `=${params[key]}`
-      }
-      return api.patch(`/room/${roomId}` + paramsStr, {}).then(res => {
+      return api.patch(`/room/${roomId}` + obj2ParamsStr(params), {}).then(res => {
         resolve(res)
       }, res => {
         reject(res)

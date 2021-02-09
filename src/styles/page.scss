@@ -19,6 +19,7 @@
 }
 
 .step-page {
+  min-width: 1450px;
     &>.step-tit {
         margin-top: 20px;
         display: flex;
@@ -36,7 +37,7 @@
         display: flex;
         padding: 30px;
         &>.tit-con {
-            width: 500px;
+            width: 380px;
             padding: 80px 30px;
             position: relative;
             user-select: none;
