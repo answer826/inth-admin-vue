@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'fa fa-home' }
+      meta: { title: '首页', icon: 'fa fa-home', type: 'tab' }
     }]
   },
   { // 营地
@@ -62,6 +62,7 @@ export const constantRoutes = [
       {
         path: '/',
         name: 'CampsList',
+        meta: { title: '营地管理', type: 'tab' },
         component: () => import('@/views/camps'),
         hidden: true
       },
@@ -81,6 +82,7 @@ export const constantRoutes = [
         children: [
           {
             path: '/',
+            meta: { title: '房间管理' },
             component: () => import('@/views/camps/room/roomList'),
             hidden: true
           },
@@ -92,9 +94,9 @@ export const constantRoutes = [
             hidden: true
           },
           {
-            path: '/orderMgr/:id',
+            path: '/orderMgr/:roomId',
             name: 'RoomOrder',
-            meta: { title: '房间管理' },
+            meta: { title: '订单与价格管理' },
             component: () => import('@/views/camps/room/order'),
             hidden: true
           }
@@ -109,11 +111,12 @@ export const constantRoutes = [
         children: [
           {
             path: '/',
+            meta: { title: '库存管理' },
             component: () => import('@/views/camps/stock/stockList'),
             hidden: true
           },
           {
-            path: '/stockDetail/:campId/:id',
+            path: '/stockDetail/:campId/:stockId',
             name: 'stockDetail',
             meta: { title: '物品编辑' },
             component: () => import('@/views/camps/stock/stockDetail'),
@@ -123,7 +126,7 @@ export const constantRoutes = [
       }
     ]
   },
-  { // 营地
+  { // 优惠券
     path: '/coupon',
     component: Layout,
     meta: { title: '优惠券', icon: 'fa fa-swatchbook' },
@@ -131,6 +134,7 @@ export const constantRoutes = [
       {
         path: '/',
         name: 'CouponList',
+        meta: { title: '优惠券', type: 'tab' },
         component: () => import('@/views/coupon/couponList'),
         hidden: true
       },
@@ -160,5 +164,26 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
-
+var routeList = []
+router.beforeEach((to, from, next) => {
+  var index = -1
+  // 判断路由之前是否存在，并返回位置
+  for (var i = 0; i < routeList.length; i++) {
+    if (routeList[i].name === to.meta.title) {
+      index = i
+      break
+    }
+  }
+  if (index !== -1) {
+    // 如果存在，则回到重复路由的之前位置
+    routeList.splice(index + 1, routeList.length - index - 1)
+  } else {
+    if (to.meta.type === 'tab') routeList = []
+    //   不存在则加入循环数组内 （注1）
+    routeList.push({ name: to.meta.title, path: to.path })
+  }
+  to.meta.routeList = routeList
+  // console.log(routeList)
+  next()
+})
 export default router

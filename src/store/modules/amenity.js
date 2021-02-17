@@ -1,5 +1,5 @@
 import api from '@/api'
-import { obj2ParamsStr } from '@/utils'
+import utils from '@/utils'
 
 const state = {}
 
@@ -9,7 +9,7 @@ const actions = {
   // 增加房间设施
   addAmenity({ commit }, params) {
     return new Promise((resolve, reject) => {
-      return api.post(`/amenity` + obj2ParamsStr(params)).then(res => {
+      return api.post(`/amenity` + utils.base.obj2ParamsStr(params)).then(res => {
         resolve(res)
       }, res => {
         reject(res)
@@ -31,7 +31,7 @@ const actions = {
     const id = params.id
     delete params.id
     return new Promise((resolve, reject) => {
-      return api.patch(`/amenity/${id}` + obj2ParamsStr(params)).then(res => {
+      return api.patch(`/amenity/${id}` + utils.base.obj2ParamsStr(params)).then(res => {
         resolve(res)
       }, res => {
         reject(res)

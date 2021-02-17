@@ -10,22 +10,95 @@
       <template slot="dateCell" slot-scope="{ date, data }">
         <div :class="['date-cell', {disabled: new Date(data.day) < todayDate}, {reserved: reservedDate.includes(data.day)}]" @click.stop.prevent="selectDate(new Date(data.day), data.day)">
           <div class="date-con">{{ data.day.split('-').slice(2).join('-') }}</div>
-          <div class="price-con">￥1260</div>
+          <div v-if="priceList[data.day]" class="price-con">￥{{ priceList[data.day].price }}</div>
         </div>
       </template>
     </el-calendar>
   </div>
 </template>
 <script>
+import utils from '@/utils'
 export default {
   data() {
     return {
       info: {},
+      roomId: this.$route.params.roomId,
       todayDate: new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} 00:00:00`),
-      reservedDate: [`2021-01-09`, `2021-01-12`]
+      reservedDate: [`2021-01-09`, `2021-01-12`],
+      currentDate: {
+        month: null,
+        year: null
+      },
+      priceList: []
     }
   },
+  mounted() {
+    this.init()
+    this.getMonthPrice()
+  },
   methods: {
+    getMonthPrice() {
+      const params = {
+        roomId: this.roomId,
+        startdate: utils.date.dateFormat('YYYY-mm-dd', new Date(`${this.currentDate.year}-${this.currentDate.month}-1`)),
+        enddate: utils.date.dateFormat('YYYY-mm-dd', new Date(`${this.currentDate.year}-${this.currentDate.month}-${utils.date.getMonthDays(this.currentDate.year, this.currentDate.month)}`))
+      }
+      this.$store.dispatch('room/getRoomPrice', params).then(res => {
+        this.priceList = res.data
+      })
+    },
+    init() {
+      // 绑定点击事件
+      this.initCalendar()
+      // 初始化当前年月
+      this.initDate()
+    },
+    initDate() {
+      // 初始化当前月份
+      this.currentDate = {
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear()
+      }
+    },
+    initCalendar() {
+      this.$nextTick(() => {
+        // 点击上个月
+        const prevBtn1 = document.querySelector('.el-calendar__button-group .el-button-group>button:nth-child(1)')
+        prevBtn1.addEventListener('click', () => {
+          console.log('上个月')
+          if (this.currentDate.month === 1) {
+            this.currentDate = {
+              month: 12,
+              year: this.currentDate.year - 1
+            }
+          } else {
+            this.currentDate.month -= 1
+          }
+          this.getMonthPrice()
+        })
+        // 点击今天
+        const prevBtn2 = document.querySelector('.el-calendar__button-group .el-button-group>button:nth-child(2)')
+        prevBtn2.addEventListener('click', () => {
+          console.log('今天')
+          this.initDate()
+          this.getMonthPrice()
+        })
+        // 点击下个月
+        const prevBtn3 = document.querySelector('.el-calendar__button-group .el-button-group>button:nth-child(3)')
+        prevBtn3.addEventListener('click', () => {
+          console.log('下个月')
+          if (this.currentDate.month === 12) {
+            this.currentDate = {
+              month: 1,
+              year: this.currentDate.year + 1
+            }
+          } else {
+            this.currentDate.month += 1
+          }
+          this.getMonthPrice()
+        })
+      })
+    },
     selectDate(data, day) {
       if (data < this.todayDate || this.reservedDate.includes(day)) return
       this.$prompt(`请输入 ${day} 的价格`, '提示', {
@@ -35,15 +108,20 @@ export default {
         inputPattern: /^(([1-9][0-9]*\.[0-9][0-9]*)|([0]\.[0-9][0-9]*)|([1-9][0-9]*)|([0]{1}))$/,
         inputErrorMessage: '金额格式不正确'
       }).then(({ value }) => {
-        this.$message({
-          type: 'success',
-          message: '设置成功'
+        const params = {
+          roomId: this.roomId,
+          date: day,
+          price: value
+        }
+        // console.log(params)
+        this.$store.dispatch('room/setRoomPrice', params).then(res => {
+          this.priceList[day].price = value
+          this.$message({
+            type: 'success',
+            message: '设置成功'
+          })
         })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
       })
     }
   }

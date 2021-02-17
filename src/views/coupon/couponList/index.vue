@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import utils from '@/utils'
 export default {
   data() {
     return {
@@ -54,24 +55,36 @@ export default {
         label: '是否启用',
         prop: 'isActive'
       }, {
-        label: '创建时间',
-        prop: 'createDate'
+        label: '开始时间',
+        prop: 'beforeDate'
+      }, {
+        label: '结束时间',
+        prop: 'afterDate'
       }],
-      tableData: [{
-        name: '华美达营地',
-        code: 'EXYUYASHS01',
-        description: '满3000减200',
-        usedCount: '200/1000',
-        isActive: '是',
-        createDate: '2021-01-17 18:01:16'
-      }],
+      tableData: [],
       pageInfo: {
         currentPage: 1,
         total: 0
       }
     }
   },
+  mounted() {
+    this.getCouponList()
+  },
   methods: {
+    getCouponList() {
+      this.$store.dispatch('coupon/getCouponList').then(res => {
+        this.tableData = (res.data || []).map(item => {
+          return {
+            ...item,
+            usedCount: `${item.used}/${item.total}`,
+            isActive: item.enabled ? '是' : '否',
+            beforeDate: utils.date.dateFormat('YYYY-mm-dd HH:MM:SS', new Date(item.not_before)),
+            afterDate: utils.date.dateFormat('YYYY-mm-dd HH:MM:SS', new Date(item.not_after))
+          }
+        })
+      })
+    },
     handleCurrentChange() {},
     // 优惠券编辑
     toCoupon(id) {

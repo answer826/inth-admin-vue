@@ -1,5 +1,5 @@
 import api from '@/api'
-import { obj2FormData } from '@/utils'
+import utils from '@/utils'
 // 营地相关api
 
 const state = {}
@@ -42,7 +42,7 @@ const actions = {
     const campId = params.campId
     delete params.campId
     return new Promise((resolve, reject) => {
-      return api.post(`/campimg/${campId}/uploadcampimgs`, obj2FormData(params), { 'Content-Type': 'multipart/form-data' }).then(res => {
+      return api.post(`/campimg/${campId}/uploadcampimgs`, utils.base.obj2FormData(params), { 'Content-Type': 'multipart/form-data' }).then(res => {
         resolve(res)
       }, res => {
         reject(res)
@@ -54,7 +54,7 @@ const actions = {
     const campId = params.campId
     delete params.campId
     return new Promise((resolve, reject) => {
-      return api.post(`/campvod/${campId}/uploadcampvod`, obj2FormData(params), { 'Content-Type': 'multipart/form-data' }).then(res => {
+      return api.post(`/campvod/${campId}/uploadcampvod`, utils.base.obj2FormData(params), { 'Content-Type': 'multipart/form-data' }).then(res => {
         resolve(res)
       }, res => {
         reject(res)

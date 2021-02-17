@@ -1,5 +1,5 @@
 import api from '@/api'
-import { obj2FormData, obj2ParamsStr } from '@/utils'
+import utils from '@/utils'
 // 房间相关api
 
 const state = {}
@@ -32,12 +32,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       const campId = params.campId
       delete params.campId
-      let paramsStr = ''
-      for (const key in params) {
-        if (params[key] === '') continue
-        paramsStr += (paramsStr === '' ? '?' : '&') + key + `=${params[key]}`
-      }
-      return api.post(`/${campId}/room` + paramsStr, {}).then(res => {
+      return api.post(`/${campId}/room` + utils.base.obj2ParamsStr(params), {}).then(res => {
         resolve(res)
       }, res => {
         reject(res)
@@ -49,7 +44,7 @@ const actions = {
     const roomId = params.roomId
     delete params.roomId
     return new Promise((resolve, reject) => {
-      return api.post(`/room/${roomId}/roomimgs`, obj2FormData(params), { 'Content-Type': 'multipart/form-data' }).then(res => {
+      return api.post(`/room/${roomId}/roomimgs`, utils.base.obj2FormData(params), { 'Content-Type': 'multipart/form-data' }).then(res => {
         resolve(res)
       }, res => {
         reject(res)
@@ -71,7 +66,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       const roomId = params.roomId
       delete params.roomId
-      return api.patch(`/room/${roomId}` + obj2ParamsStr(params), {}).then(res => {
+      return api.patch(`/room/${roomId}` + utils.base.obj2ParamsStr(params), {}).then(res => {
         resolve(res)
       }, res => {
         reject(res)
@@ -81,7 +76,31 @@ const actions = {
   // 删除营地轮播图
   deleteRoomImgs({ commit }, params) {
     return new Promise((resolve, reject) => {
-      return api.delete(`/room/${params.roomId}/${params.imgId}`, obj2FormData(params), { 'Content-Type': 'multipart/form-data' }).then(res => {
+      return api.delete(`/room/${params.roomId}/${params.imgId}`, utils.base.obj2FormData(params), { 'Content-Type': 'multipart/form-data' }).then(res => {
+        resolve(res)
+      }, res => {
+        reject(res)
+      })
+    })
+  },
+  // 获取房间价格列表
+  getRoomPrice({ commit }, params) {
+    return new Promise((resolve, reject) => {
+      const roomId = params.roomId
+      delete params.roomId
+      return api.get(`/room/${roomId}/price`, params).then(res => {
+        resolve(res)
+      }, res => {
+        reject(res)
+      })
+    })
+  },
+  // 设置单日房间价格
+  setRoomPrice({ commit }, params) {
+    return new Promise((resolve, reject) => {
+      const roomId = params.roomId
+      delete params.roomId
+      return api.patch(`/room/${roomId}/price` + utils.base.obj2ParamsStr(params), {}).then(res => {
         resolve(res)
       }, res => {
         reject(res)

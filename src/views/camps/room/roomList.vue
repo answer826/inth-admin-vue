@@ -15,10 +15,10 @@
           label="名称"
         />
         <el-table-column
-          label="订单"
+          label="价格和订单"
         >
-          <template>
-            <el-button size="mini" @click="toOrder(1)">订单管理</el-button>
+          <template slot-scope="scope">
+            <el-button size="mini" @click="toOrder(scope.row.id)">管理</el-button>
           </template>
         </el-table-column>
         <el-table-column
