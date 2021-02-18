@@ -29,7 +29,8 @@ export default {
         month: null,
         year: null
       },
-      priceList: []
+      priceList: [],
+      basePrice: null
     }
   },
   mounted() {
@@ -47,7 +48,14 @@ export default {
         this.priceList = res.data
       })
     },
+    initBasePrice() {
+      this.$store.dispatch('room/getRoom', this.roomId).then(res => {
+        this.basePrice = parseInt(res.data.base_price)
+      })
+    },
     init() {
+      // 查询基础价格
+      this.initBasePrice()
       // 绑定点击事件
       this.initCalendar()
       // 初始化当前年月
@@ -111,11 +119,11 @@ export default {
         const params = {
           roomId: this.roomId,
           date: day,
-          price: value
+          price: value - this.basePrice
         }
         // console.log(params)
         this.$store.dispatch('room/setRoomPrice', params).then(res => {
-          this.priceList[day].price = value
+          this.getMonthPrice()
           this.$message({
             type: 'success',
             message: '设置成功'

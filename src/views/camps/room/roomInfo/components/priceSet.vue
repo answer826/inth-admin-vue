@@ -11,7 +11,7 @@
         <el-form-item label="基础价格" prop="base_price">
           <el-input v-model="roomData.roomInfo.base_price" type="number" placeholder="请输入房间基础价格" />
         </el-form-item>
-        <el-form-item label="价格总览">
+        <!-- <el-form-item label="价格总览">
           <el-calendar class="room-price-set">
             <template slot="dateCell" slot-scope="{ date, data }">
               <div :class="['date-cell', {disabled: new Date(data.day) < todayDate}]" @click.stop.prevent="selectDate(new Date(data.day), data.day)">
@@ -20,7 +20,7 @@
               </div>
             </template>
           </el-calendar>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item size="large">
           <el-button @click="changeStep(2)">上一步</el-button>
           <el-button type="primary" @click="doSave">完成</el-button>
