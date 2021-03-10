@@ -24,7 +24,7 @@ export default {
       info: {},
       roomId: this.$route.params.roomId,
       todayDate: new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} 00:00:00`),
-      reservedDate: [`2021-01-09`, `2021-01-12`],
+      reservedDate: [],
       currentDate: {
         month: null,
         year: null
@@ -46,6 +46,10 @@ export default {
       }
       this.$store.dispatch('room/getRoomPrice', params).then(res => {
         this.priceList = res.data
+        this.reservedDate = []
+        for (const key in res.data) {
+          if (res.data[key].availability === '1') this.reservedDate.push(key)
+        }
       })
     },
     initBasePrice() {

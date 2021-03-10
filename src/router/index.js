@@ -74,6 +74,13 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: 'quickBook/:id',
+        name: 'QuickBook',
+        meta: { title: '快速预定' },
+        component: () => import('@/views/camps/quickBook'),
+        hidden: true
+      },
+      {
         path: '/roomList/:campId',
         meta: { title: '房间管理' },
         name: 'RoomList',

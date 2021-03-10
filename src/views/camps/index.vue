@@ -41,9 +41,10 @@
         </el-table-column>
         <el-table-column
           label="操作"
-          width="200px"
+          width="250px"
         >
           <template slot-scope="scope">
+            <el-button type="primary" size="mini" @click="toQuickBook(scope.row.id)">快速下单</el-button>
             <el-button size="mini" @click="toCamp(scope.row.id)">编辑</el-button>
             <el-button type="danger" size="mini" @click="deleteCamp(scope.row)">删除</el-button>
           </template>
@@ -91,6 +92,9 @@ export default {
     },
     toStockList(id) {
       this.$router.push(`/stockList/${id}`)
+    },
+    toQuickBook(id) {
+      this.$router.push(`/camps/quickBook/${id}`)
     },
     // 删除营地
     deleteCamp(camp) {

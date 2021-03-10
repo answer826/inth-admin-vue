@@ -23,7 +23,23 @@ const dateFormat = (fmt, date) => {
   }
   return fmt
 }
+const getCalculateDate = (date, day) => { // 获取指定前后天数的日期
+  const dd = new Date(date)
+  dd.setDate(dd.getDate() + day)
+  const y = dd.getFullYear()
+  const m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1
+  const d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate()
+  return `${y}-${m}-${d}`
+}
+
+const getDaysBetween = (startDate, endDate) => { // 计算两个日期相差的天数
+  startDate = Date.parse(startDate)
+  endDate = Date.parse(endDate)
+  return (endDate - startDate) / (24 * 60 * 60 * 1000)
+}
 export default {
   getMonthDays,
-  dateFormat
+  dateFormat,
+  getCalculateDate,
+  getDaysBetween
 }
